@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class cameraControl : MonoBehaviour
 {
-    float camera_distance = 10;
+    float camera_distance = 8;
     float camera_height = 3;
-    float focus_distance = 100;
+    float focus_distance = 50;
     private Vector3 desired_position;
     private Quaternion desired_orienation;
 
