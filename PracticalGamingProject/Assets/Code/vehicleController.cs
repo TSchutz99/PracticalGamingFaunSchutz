@@ -7,36 +7,47 @@ public class vehicleController : MonoBehaviour
 {
     float current_speed = 15.0f;
     float turning_speed = 180.0f;
+    float current_turning_direction = 0;
+    Transform wheel;
     cameraControl my_camera;
     // Start is called before the first frame update
     void Start()
     {
         my_camera = Camera.main.GetComponent<cameraControl>();
+        wheel = transform.GetChild(0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (should_move_forward()) move_forward();
-        if (should_move_backward()) move_backward();
+        current_turning_direction = 0;
         if (should_turn_left()) turn_left();
         if (should_turn_right()) turn_right();
+
+        if (should_move_forward()) move_forward();
+        if (should_move_backward()) move_backward();
 
         my_camera.my_Position_is(transform);
     }
 
     private void turn_right()
     {
-        transform.Rotate(Vector3.up, turning_speed * Time.deltaTime);
+        current_turning_direction = 1.0f;
+       // transform.Rotate(Vector3.up, turning_speed * Time.deltaTime);
     }
 
     private void turn_left()
     {
-        transform.Rotate(Vector3.up, -turning_speed * Time.deltaTime);
+        current_turning_direction = -1.0f;
+        //transform.Rotate(Vector3.up, -turning_speed * Time.deltaTime);
     }
 
     private void move_backward()
     {
+        transform.Rotate(Vector3.up * turning_speed * current_turning_direction * Time.deltaTime);
+
+        wheel.Rotate(Vector3.right * current_speed * 100 * Time.deltaTime);
+
         transform.position -= current_speed * transform.forward * Time.deltaTime;
     }
 
@@ -45,13 +56,16 @@ public class vehicleController : MonoBehaviour
     /// </summary>
     private void move_forward()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
             current_speed = current_speed * 2;
-        else
-            current_speed = 15.0f;
-        
+
+        transform.Rotate(Vector3.up * turning_speed * current_turning_direction * Time.deltaTime);
+
+        wheel.Rotate(Vector3.right * current_speed * 100 * Time.deltaTime);
+
         transform.position += current_speed * transform.forward * Time.deltaTime;
-        //transform.Rotate(Vector3.right * current_speed * Time.deltaTime);
+      
+        current_speed = 15.0f;
     }
 
     private bool should_turn_right()
