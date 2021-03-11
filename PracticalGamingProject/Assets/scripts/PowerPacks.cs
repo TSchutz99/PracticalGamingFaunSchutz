@@ -1,0 +1,28 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PowerPacks : MonoBehaviour
+{
+    private float rotation_speed = 180f;
+    private float height, startingHeight;
+    private float freq = 2, range = 0.5f, t;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        startingHeight = transform.position.y;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Rotate(Vector3.up, rotation_speed * Time.deltaTime, Space.World);
+
+        height = startingHeight + range * Mathf.Sin(freq * t);
+
+        t += Time.deltaTime;
+
+        transform.position = new Vector3(transform.position.x, height, transform.position.z);
+    }
+}

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class vehicleController : MonoBehaviour
+public class vehicleControl : MonoBehaviour
 {
     float current_speed = 15.0f;
     float turning_speed = 180.0f;
@@ -33,7 +33,7 @@ public class vehicleController : MonoBehaviour
     private void turn_right()
     {
         current_turning_direction = 1.0f;
-       // transform.Rotate(Vector3.up, turning_speed * Time.deltaTime);
+        // transform.Rotate(Vector3.up, turning_speed * Time.deltaTime);
     }
 
     private void turn_left()
@@ -64,7 +64,7 @@ public class vehicleController : MonoBehaviour
         wheel.Rotate(Vector3.right * current_speed * 100 * Time.deltaTime);
 
         transform.position += current_speed * transform.forward * Time.deltaTime;
-      
+
         current_speed = 15.0f;
     }
 
