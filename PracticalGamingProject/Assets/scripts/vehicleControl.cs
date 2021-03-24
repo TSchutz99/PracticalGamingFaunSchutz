@@ -5,11 +5,23 @@ using UnityEngine;
 
 public class vehicleControl : MonoBehaviour
 {
+    enum boost_state { charging, boosting };
+    boost_state nitro_is = boost_state.charging;
     float current_speed = 15.0f;
     float turning_speed = 180.0f;
     float current_turning_direction = 0;
+    float _nitro = 100f;
+    float nitro_replenish_rate = 2;
+    float nitro_use_rate = 10;
+    float Nitro
+    {
+        get { return _nitro; }
+        set { _nitro = Mathf.Clamp(value,0,100); }
+    }
+
     Transform wheel;
     cameraControl my_camera;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +40,9 @@ public class vehicleControl : MonoBehaviour
 
         if (should_move_forward()) move_forward();
         if (should_move_backward()) move_backward();
+
+        if(nitro_is == boost_state.charging)
+            Nitro += nitro_replenish_rate * Time.deltaTime;
     }
 
     private void turn_right()
@@ -56,8 +71,21 @@ public class vehicleControl : MonoBehaviour
     /// </summary>
     private void move_forward()
     {
-        if (Input.GetKey(KeyCode.Space))
-            current_speed = current_speed * 2;
+        if (Input.GetKey(KeyCode.Space)) { 
+            if(nitro_is == boost_state.charging) {
+                if (Nitro > 20)
+                    nitro_is = boost_state.boosting; 
+            }
+            else
+            {
+                current_speed = current_speed * 2;
+
+                Nitro -= nitro_use_rate * Time.deltaTime;
+
+                if (Nitro == 0)
+                    nitro_is = boost_state.charging;
+            }
+        }
 
         transform.Rotate(Vector3.up * turning_speed * current_turning_direction * Time.deltaTime);
 

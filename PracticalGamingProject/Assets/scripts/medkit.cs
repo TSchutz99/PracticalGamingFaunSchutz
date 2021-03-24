@@ -17,7 +17,7 @@ public class medkit : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        IDamagable object_Hit = collision.gameObject.GetComponent<IDamagable>();
+        IInteract object_Hit = collision.gameObject.GetComponent<IInteract>();
 
         if (object_Hit != null)
         {
@@ -25,10 +25,10 @@ public class medkit : MonoBehaviour
 
             Destroy(gameObject);
 
-            if (object_Hit is vehicle)
+            /*if (object_Hit is vehicle)
             {
                 ((vehicle)object_Hit).no_You_see_me();
-            }
+            }*/
         }
     }
 }
