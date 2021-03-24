@@ -15,6 +15,8 @@ public class vehicleControl : MonoBehaviour
     {
         my_camera = Camera.main.GetComponent<cameraControl>();
         wheel = transform.GetChild(0);
+
+        my_camera.my_owner_is(transform);
     }
 
     // Update is called once per frame
@@ -26,8 +28,6 @@ public class vehicleControl : MonoBehaviour
 
         if (should_move_forward()) move_forward();
         if (should_move_backward()) move_backward();
-
-        my_camera.my_Position_is(transform);
     }
 
     private void turn_right()
