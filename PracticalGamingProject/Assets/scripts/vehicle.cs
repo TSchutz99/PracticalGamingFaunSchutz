@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class vehicle : MonoBehaviour, IDamagable
+public class vehicle : MonoBehaviour, IInteract
 {
 
 	public int maxHealth = 100;
@@ -45,9 +45,4 @@ public class vehicle : MonoBehaviour, IDamagable
 
 		healthBar.SetHealth(currentHealth);
 	}
-
-	internal void no_You_see_me()
-    {
-		print("You see me");
-    }
 }
