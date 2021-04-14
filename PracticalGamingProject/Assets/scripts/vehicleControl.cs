@@ -11,14 +11,14 @@ public class vehicleControl : MonoBehaviour
     float turning_speed = 180.0f;
     float current_turning_direction = 0;
     float _nitro = 100f;
-    float nitro_replenish_rate = 2;
+    float nitro_replenish_rate = 5;
     float nitro_use_rate = 10;
     float Nitro
     {
         get { return _nitro; }
         set { _nitro = Mathf.Clamp(value,0,100); }
     }
-
+    public BoostBar boostBar;
     Transform wheel;
     cameraControl my_camera;
     
@@ -29,6 +29,8 @@ public class vehicleControl : MonoBehaviour
         wheel = transform.GetChild(0);
 
         my_camera.my_owner_is(transform);
+
+        boostBar.SetMaxBoost((int)_nitro);
     }
 
     // Update is called once per frame
@@ -43,6 +45,8 @@ public class vehicleControl : MonoBehaviour
 
         if(nitro_is == boost_state.charging)
             Nitro += nitro_replenish_rate * Time.deltaTime;
+
+        boostBar.SetBoost((int)_nitro);
     }
 
     private void turn_right()
@@ -85,7 +89,10 @@ public class vehicleControl : MonoBehaviour
                 if (Nitro == 0)
                     nitro_is = boost_state.charging;
             }
+
         }
+
+        //boostBar.SetBoost((int)_nitro);
 
         transform.Rotate(Vector3.up * turning_speed * current_turning_direction * Time.deltaTime);
 
