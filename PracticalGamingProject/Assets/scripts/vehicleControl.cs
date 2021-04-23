@@ -90,6 +90,8 @@ public class vehicleControl : MonoBehaviour
                     nitro_is = boost_state.charging;
             }
 
+        }else{
+            nitro_is = boost_state.charging;
         }
 
         //boostBar.SetBoost((int)_nitro);
