@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class medkit : MonoBehaviour
+public class medkit : PowerPacks
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    internal void Update()
     {
-        
+        base.Update();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -23,6 +23,7 @@ public class medkit : MonoBehaviour
         {
             object_Hit.heal(20);
 
+            theManager.IveBeenDestroyed(this);
             Destroy(gameObject);
 
             /*if (object_Hit is vehicle)
