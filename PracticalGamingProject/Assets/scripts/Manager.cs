@@ -25,11 +25,12 @@ public class Manager : MonoBehaviour
             item.Iam(this);
         } 
 
-        for(int i = 0; i < 20; i++)
+        for(int i = 0; i < 20; i++) { 
             spawn_power_packs(bomb_template);
-
-        for(int i = 0; i < 8; i++)
+        }
+        for(int i = 0; i < 8; i++) { 
             spawn_power_packs(medkit_template);
+        }
     }
 
     // Update is called once per frame
@@ -61,13 +62,13 @@ public class Manager : MonoBehaviour
 
         GameObject go = Instantiate(powerPack, new Vector3(UnityEngine.Random.Range(-250.0f, 250.0f), 2.5f, UnityEngine.Random.Range(-250.0f, 250.0f)), Quaternion.identity);
 
-        if(powerPack = bomb_template) {
+        if(powerPack == bomb_template) {
             Bomb newBomb = go.GetComponent<Bomb>();
             bombs.Add(newBomb);
             allItems.Add(newBomb);
             newBomb.Iam(this); 
         }
-        else if(powerPack = medkit_template)
+        else if(powerPack == medkit_template)
         {
             medkit newMedkit = go.GetComponent<medkit>();
             meds.Add(newMedkit);
