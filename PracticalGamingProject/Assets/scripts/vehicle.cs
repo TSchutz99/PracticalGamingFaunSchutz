@@ -5,6 +5,8 @@ using UnityEngine;
 public class vehicle : MonoBehaviour, IInteract
 {
 
+	internal Manager theManager;
+
 	public int maxHealth = 100;
 	public int currentHealth;
 
@@ -13,6 +15,8 @@ public class vehicle : MonoBehaviour, IInteract
 	// Start is called before the first frame update
 	void Start()
 	{
+		theManager = FindObjectOfType<Manager>();
+
 		currentHealth = maxHealth;
 		healthBar.SetMaxHealth(maxHealth);
 	}
@@ -20,18 +24,11 @@ public class vehicle : MonoBehaviour, IInteract
 	// Update is called once per frame
 	void Update()
 	{
-		//if (Input.GetKeyDown(KeyCode.H))
-		//{
-		//	TakeDamage(20);
-		//}
+		if (currentHealth <= 0) {
+			print("Game Over - You Died");
+			theManager.GameOver();
+		}
 	}
-
-	//void TakeDamage(int damage)
-	//{
-	//	currentHealth -= damage;
-
-	//	healthBar.SetHealth(currentHealth);
-	//}
 
     public void take_Damage(int amountDam)
     {
