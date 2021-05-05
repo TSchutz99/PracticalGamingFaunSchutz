@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
     vehicleControl player;
     List<Bomb> bombs;
     List<medkit> meds;
+    List<goldenEgg> goldEggs;
     List<PowerPacks> allItems;
     public GameObject bomb_template;
     public GameObject medkit_template;
+    public GameObject goldenEgg_templte;
     // Start is called before the first frame update
     void Start()
     {
         bombs = FindObjectsOfType<Bomb>().ToList();
         meds = FindObjectsOfType<medkit>().ToList();
+        goldEggs = FindObjectsOfType<goldenEgg>().ToList();
         allItems = FindObjectsOfType<PowerPacks>().ToList();
         player = FindObjectOfType<vehicleControl>();
 
@@ -30,6 +34,10 @@ public class Manager : MonoBehaviour
         }
         for(int i = 0; i < 8; i++) { 
             spawn_power_packs(medkit_template);
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            spawn_power_packs(goldenEgg_templte);
         }
     }
 
@@ -56,6 +64,11 @@ public class Manager : MonoBehaviour
         meds.Remove(med);
         allItems.Remove(med);
     }
+    internal void IveBeenDestroyed(goldenEgg goldEgg)
+    {
+        goldEggs.Remove(goldEgg);
+        allItems.Remove(goldEgg);
+    }
     internal void spawn_power_packs(GameObject powerPack)
     {
         // spawn a power packs in random position
@@ -75,5 +88,16 @@ public class Manager : MonoBehaviour
             allItems.Add(newMedkit);
             newMedkit.Iam(this);
         }
+        else if (powerPack == goldenEgg_templte)
+        {
+            goldenEgg newGoldenEgg = go.GetComponent<goldenEgg>();
+            goldEggs.Add(newGoldenEgg);
+            allItems.Add(newGoldenEgg);
+            newGoldenEgg.Iam(this);
+        }
+    }
+    internal void GameOver()
+    {
+        SceneManager.LoadScene(0);
     }
 }
