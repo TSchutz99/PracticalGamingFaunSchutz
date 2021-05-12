@@ -17,13 +17,13 @@ public class goldenEgg : PowerPacks
     // Update is called once per frame
     void Update()
     {
-        base.Update();
-
         if(collected_eggs == 6)
         {
             print("Game Over - You Win");
             theManager.GameOver();
         }
+        else
+            base.Update();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -32,7 +32,9 @@ public class goldenEgg : PowerPacks
 
         if (object_Hit != null)
         {
+            // After 1 counter dones not go up, no idea why
             collected_eggs++;
+            print(collected_eggs);
             eggs.egg_collected(collected_eggs);
 
             theManager.IveBeenDestroyed(this);
